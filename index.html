@@ -1,10 +1,279 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹 개발자 포트폴리오 | Your Name</title>
+    <meta name="description" content="창의적이고 혁신적인 웹 개발자의 포트폴리오입니다.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Header & Navigation -->
+    <header>
+        <nav>
+            <div class="logo">YourName</div>
+            <ul class="nav-links">
+                <li><a href="#home">홈</a></li>
+                <li><a href="#about">소개</a></li>
+                <li><a href="#skills">기술</a></li>
+                <li><a href="#projects">프로젝트</a></li>
+                <li><a href="#contact">연락처</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
 
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>안녕하세요, 저는 웹 개발자입니다</h1>
+            <p>창의적이고 혁신적인 웹 솔루션을 만드는 것이 저의 열정입니다</p>
+            <a href="#projects" class="cta-button">내 작업 보기</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2 class="section-title">소개</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="https://via.placeholder.com/250x250/3498db/ffffff?text=Your+Photo" alt="프로필 사진">
+            </div>
+            <div class="about-text">
+                <h3>저에 대해</h3>
+                <p>
+                    안녕하세요! 저는 5년 이상의 경험을 가진 웹 개발자입니다.
+                    사용자 중심의 웹 애플리케이션을 개발하며, 최신 기술 트렌드를
+                    항상 학습하고 적용하는 것을 좋아합니다.
+                </p>
+                <p>
+                    프론트엔드와 백엔드 모두에 능숙하며, 특히 React, Vue.js, Node.js를
+                    활용한 풀스택 개발에 전문성을 가지고 있습니다.
+                    클린 코드와 효율적인 솔루션을 만드는 것이 저의 목표입니다.
+                </p>
+                <p>
+                    팀워크를 중시하며, 복잡한 문제를 해결하는 과정에서 창의적인
+                    접근법을 찾는 것을 즐깁니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <h2 class="section-title">기술 스택</h2>
+        <div class="skills-grid">
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fab fa-html5"></i>
+                </div>
+                <h4>HTML5</h4>
+                <p>시맨틱 마크업과 접근성을 고려한 구조적 웹 개발</p>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fab fa-css3-alt"></i>
+                </div>
+                <h4>CSS3</h4>
+                <p>반응형 디자인, Flexbox, Grid, 애니메이션</p>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fab fa-js-square"></i>
+                </div>
+                <h4>JavaScript</h4>
+                <p>ES6+, DOM 조작, 비동기 프로그래밍</p>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fab fa-react"></i>
+                </div>
+                <h4>React</h4>
+                <p>컴포넌트 기반 개발, Hooks, Context API</p>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fab fa-vue"></i>
+                </div>
+                <h4>Vue.js</h4>
+                <p>Progressive Framework, Vuex, Vue Router</p>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h4>Node.js</h4>
+                <p>서버 사이드 개발, Express.js, RESTful API</p>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h4>Database</h4>
+                <p>MongoDB, MySQL, PostgreSQL</p>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fab fa-git-alt"></i>
+                </div>
+                <h4>Git</h4>
+                <p>버전 관리, GitHub, 협업 워크플로우</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <h2 class="section-title">프로젝트</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-shopping-cart" style="font-size: 3rem;"></i>
+                </div>
+                <div class="project-content">
+                    <h4>E-Commerce 플랫폼</h4>
+                    <p>React와 Node.js를 사용한 풀스택 쇼핑몰 웹사이트. 사용자 인증, 장바구니, 결제 시스템을 구현했습니다.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">라이브 데모</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-tasks" style="font-size: 3rem;"></i>
+                </div>
+                <div class="project-content">
+                    <h4>태스크 관리 앱</h4>
+                    <p>Vue.js와 Firebase를 활용한 실시간 협업 태스크 관리 도구. 드래그 앤 드롭, 실시간 동기화 기능을 포함합니다.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">라이브 데모</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-chart-line" style="font-size: 3rem;"></i>
+                </div>
+                <div class="project-content">
+                    <h4>데이터 시각화 대시보드</h4>
+                    <p>D3.js와 React를 사용한 인터랙티브 데이터 시각화 대시보드. 실시간 차트와 다양한 필터링 옵션을 제공합니다.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">라이브 데모</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-blog" style="font-size: 3rem;"></i>
+                </div>
+                <div class="project-content">
+                    <h4>개인 블로그 플랫폼</h4>
+                    <p>Next.js와 TypeScript로 구축한 SEO 최적화된 블로그. Markdown 지원, 검색 기능, 댓글 시스템을 포함합니다.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">라이브 데모</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-mobile-alt" style="font-size: 3rem;"></i>
+                </div>
+                <div class="project-content">
+                    <h4>모바일 웨더 앱</h4>
+                    <p>Progressive Web App으로 제작된 날씨 애플리케이션. 위치 기반 서비스, 오프라인 지원, 푸시 알림을 구현했습니다.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">라이브 데모</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-gamepad" style="font-size: 3rem;"></i>
+                </div>
+                <div class="project-content">
+                    <h4>웹 기반 게임</h4>
+                    <p>Canvas API와 JavaScript를 사용한 2D 아케이드 게임. 충돌 감지, 점수 시스템, 로컬 스토리지를 활용한 최고 점수 저장 기능.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">라이브 데모</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2 class="section-title">연락처</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>함께 프로젝트를 만들어보세요!</h3>
+                <p>새로운 기회나 협업에 대해 언제나 열려있습니다. 언제든지 연락해주세요!</p>
+
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>your.email@example.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+82 10-1234-5678</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>서울, 대한민국</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-linkedin"></i>
+                    <span>linkedin.com/in/yourprofile</span>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">이름</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">이메일</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">메시지</label>
+                        <textarea id="message" name="message" required placeholder="프로젝트에 대해 알려주세요..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">메시지 보내기</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p>&copy; 2024 Your Name. 모든 권리 보유.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
