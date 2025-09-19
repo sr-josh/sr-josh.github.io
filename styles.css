@@ -157,6 +157,35 @@ section {
 }
 
 /* Skills Section */
+.skills-category {
+    margin-bottom: 3rem;
+}
+
+.skills-subtitle {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.skills-subtitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(45deg, #3498db, #2ecc71);
+    border-radius: 2px;
+}
+
+.skills-category:first-child .skills-subtitle::after {
+    background: linear-gradient(45deg, #e74c3c, #f39c12);
+}
+
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
