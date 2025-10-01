@@ -219,16 +219,69 @@ section {
 }
 
 /* Projects Section */
+.projects {
+    padding: 5rem 5%;
+}
+
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin-top: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Project Labels */
+.project-label {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 2rem 0 1rem 0;
+    position: relative;
+}
+
+.work-label {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.personal-label {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
+}
+
+.project-label::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.project-label::after {
+    content: '';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .project-card {
     background: white;
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -240,13 +293,12 @@ section {
 }
 
 .project-image {
-    height: 200px;
-    background: linear-gradient(45deg, #3498db, #2ecc71);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 1.2rem;
 }
 
 .project-content {
@@ -261,26 +313,72 @@ section {
 
 .project-content p {
     color: #666;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+/* Progress Bar */
+.progress-bar {
+    background: #e1e8ed;
+    border-radius: 10px;
+    height: 10px;
+    margin: 1.5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: width 0.8s ease;
+    position: relative;
+}
+
+.progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
 .project-links {
     display: flex;
     gap: 1rem;
+    margin-top: 1rem;
 }
 
 .project-link {
-    padding: 8px 16px;
-    background: #3498db;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
     color: white;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 25px;
     font-size: 0.9rem;
-    transition: background 0.3s ease;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
 .project-link:hover {
-    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
 }
 
 /* Contact Section */
