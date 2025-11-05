@@ -229,3 +229,86 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+
+// pressentation
+// presentation 페이지에서만 실행
+if (document.querySelector('.presentation-wrapper')) {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (n + totalSlides) % totalSlides;
+        slides[currentSlide].classList.add('active');
+        
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        if (prevBtn) prevBtn.disabled = currentSlide === 0;
+        if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
+        
+        // URL 업데이트 (브라우저 히스토리에 추가하지 않음)
+        const url = new URL(window.location);
+        url.searchParams.set('page', currentSlide + 1);
+        window.history.replaceState({}, '', url);
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+            showSlide(currentSlide + 1);
+        }
+    }
+
+    function previousSlide() {
+        if (currentSlide > 0) {
+            showSlide(currentSlide - 1);
+        }
+    }
+
+    // 쿼리스트링에서 페이지 번호 읽기
+    function loadPageFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = urlParams.get('page');
+        
+        if (page) {
+            const pageNum = parseInt(page, 10);
+            // 페이지 번호가 유효한 범위인지 확인 (1부터 시작)
+            if (pageNum >= 1 && pageNum <= totalSlides) {
+                currentSlide = pageNum - 1;
+                slides[currentSlide].classList.add('active');
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                if (prevBtn) prevBtn.disabled = currentSlide === 0;
+                if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
+                return;
+            }
+        }
+        
+        // 쿼리스트링이 없거나 유효하지 않으면 첫 페이지 표시
+        if (slides.length > 0) {
+            slides[0].classList.add('active');
+            const prevBtn = document.getElementById('prevBtn');
+            if (prevBtn) prevBtn.disabled = true;
+        }
+    }
+
+    // 키보드 네비게이션
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowRight' || event.key === ' ') {
+            nextSlide();
+        } else if (event.key === 'ArrowLeft') {
+            previousSlide();
+        }
+    });
+
+    // 페이지 로드 시 쿼리스트링 확인
+    loadPageFromURL();
+
+    // 전역 함수로 등록 (HTML onclick에서 사용)
+    window.nextSlide = nextSlide;
+    window.previousSlide = previousSlide;
+    window.showSlide = showSlide;
+}
+
