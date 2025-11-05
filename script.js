@@ -232,7 +232,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // pressentation
-// presentation 페이지에서만 실행
 if (document.querySelector('.presentation-wrapper')) {
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
