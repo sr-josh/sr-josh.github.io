@@ -1,232 +1,81 @@
-// Smooth scrolling for navigation links
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+// ============================================================
+// Portfolio interactions
+// ============================================================
+document.addEventListener('DOMContentLoaded', function () {
 
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
+    // --- Smooth scrolling for in-page anchor links ---
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#' || targetId.length < 2) return;
+            const target = document.querySelector(targetId);
+            if (!target) return;
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
 
-            // Animate hamburger menu
-            const spans = menuToggle.querySelectorAll('span');
-            if (navLinks.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
-            } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            }
+    // --- Active nav link highlighting on scroll ---
+    const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+    const sections = navLinks
+        .map(l => document.querySelector(l.getAttribute('href')))
+        .filter(Boolean);
+
+    if (sections.length) {
+        const spy = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    const active = navLinks.find(l => l.getAttribute('href') === '#' + entry.target.id);
+                    if (active) active.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+        sections.forEach(s => spy.observe(s));
+    }
+
+    // --- Cursor spotlight glow ---
+    const spotlight = document.querySelector('.spotlight');
+    if (spotlight && window.matchMedia('(hover: hover)').matches) {
+        window.addEventListener('pointermove', e => {
+            spotlight.style.setProperty('--mx', e.clientX + 'px');
+            spotlight.style.setProperty('--my', e.clientY + 'px');
         });
     }
 
-    // Close mobile menu when clicking on a link
-    const navLinksItems = document.querySelectorAll('.nav-links a');
-    navLinksItems.forEach(link => {
-        link.addEventListener('click', function() {
-            navLinks.classList.remove('active');
-            const spans = menuToggle.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        });
-    });
-
-    // Smooth scrolling for anchor links
-    const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    anchorLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-
-            if (targetSection) {
-                const headerHeight = document.querySelector('header').offsetHeight;
-                const targetPosition = targetSection.offsetTop - headerHeight;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // Header background change on scroll
-    const header = document.querySelector('header');
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) {
-            header.style.background = 'rgba(255, 255, 255, 0.98)';
-            header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            header.style.background = 'rgba(255, 255, 255, 0.95)';
-            header.style.boxShadow = 'none';
-        }
-    });
-
-    // Intersection Observer for animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
+    // --- Reveal on scroll ---
+    const reveal = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.style.transform = 'none';
+                reveal.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-    // Observe elements for animation
-    const animateElements = document.querySelectorAll('.skill-item, .project-card, .about-content');
-    animateElements.forEach(el => {
+    document.querySelectorAll('.work-item, .project-card, .stack-item').forEach(el => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        reveal.observe(el);
     });
 
-    // Typing animation for hero text
-    const heroTitle = document.querySelector('.hero-content h1');
-    if (heroTitle) {
-        const text = heroTitle.textContent;
-        heroTitle.textContent = '';
+    // --- Scroll-to-top button ---
+    const scrollBtn = document.createElement('button');
+    scrollBtn.innerHTML = '↑';
+    scrollBtn.className = 'scroll-to-top';
+    scrollBtn.setAttribute('aria-label', '맨 위로');
+    document.body.appendChild(scrollBtn);
 
-        let i = 0;
-        const typeWriter = function() {
-            if (i < text.length) {
-                heroTitle.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        };
-
-        setTimeout(typeWriter, 1000);
-    }
-
-    // Contact form handling
-    const contactForm = document.querySelector('.contact-form form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Get form data
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const message = formData.get('message');
-
-            // Simple validation
-            if (!name || !email || !message) {
-                alert('모든 필드를 채워주세요.');
-                return;
-            }
-
-            if (!isValidEmail(email)) {
-                alert('유효한 이메일 주소를 입력해주세요.');
-                return;
-            }
-
-            // Show success message
-            alert('메시지가 성공적으로 전송되었습니다! 곧 연락드리겠습니다.');
-            this.reset();
-        });
-    }
-
-    // Email validation function
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
-    // Skills animation on scroll
-    const skillItems = document.querySelectorAll('.skill-item');
-    const skillObserver = new IntersectionObserver(function(entries) {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0) scale(1)';
-                }, index * 100);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    skillItems.forEach(item => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(20px) scale(0.9)';
-        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        skillObserver.observe(item);
+    window.addEventListener('scroll', function () {
+        const show = window.scrollY > 500;
+        scrollBtn.style.opacity = show ? '1' : '0';
+        scrollBtn.style.visibility = show ? 'visible' : 'hidden';
     });
 
-    // Project cards hover effect enhancement
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-15px) scale(1.02)';
-        });
-
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-
-    // Add scroll-to-top button
-    const scrollToTopBtn = document.createElement('button');
-    scrollToTopBtn.innerHTML = '↑';
-    scrollToTopBtn.className = 'scroll-to-top';
-    scrollToTopBtn.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 50px;
-        height: 50px;
-        background: #3498db;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        font-size: 20px;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 1000;
-    `;
-
-    document.body.appendChild(scrollToTopBtn);
-
-    // Show/hide scroll-to-top button
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 500) {
-            scrollToTopBtn.style.opacity = '1';
-            scrollToTopBtn.style.visibility = 'visible';
-        } else {
-            scrollToTopBtn.style.opacity = '0';
-            scrollToTopBtn.style.visibility = 'hidden';
-        }
-    });
-
-    // Scroll to top functionality
-    scrollToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-
-    // Parallax effect for hero section
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const hero = document.querySelector('.hero');
-        if (hero) {
-            const rate = scrolled * -0.5;
-            hero.style.transform = `translateY(${rate}px)`;
-        }
+    scrollBtn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
 
@@ -241,13 +90,13 @@ if (document.querySelector('.presentation-wrapper')) {
         slides[currentSlide].classList.remove('active');
         currentSlide = (n + totalSlides) % totalSlides;
         slides[currentSlide].classList.add('active');
-        
+
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-        
+
         if (prevBtn) prevBtn.disabled = currentSlide === 0;
         if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
-        
+
         // URL 업데이트 (브라우저 히스토리에 추가하지 않음)
         const url = new URL(window.location);
         url.searchParams.set('page', currentSlide + 1);
@@ -270,7 +119,7 @@ if (document.querySelector('.presentation-wrapper')) {
     function loadPageFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
         const page = urlParams.get('page');
-        
+
         if (page) {
             const pageNum = parseInt(page, 10);
             // 페이지 번호가 유효한 범위인지 확인 (1부터 시작)
@@ -284,7 +133,7 @@ if (document.querySelector('.presentation-wrapper')) {
                 return;
             }
         }
-        
+
         // 쿼리스트링이 없거나 유효하지 않으면 첫 페이지 표시
         if (slides.length > 0) {
             slides[0].classList.add('active');
@@ -310,4 +159,3 @@ if (document.querySelector('.presentation-wrapper')) {
     window.previousSlide = previousSlide;
     window.showSlide = showSlide;
 }
-
